@@ -1,6 +1,57 @@
 <html>
+<head>
+<script type="text/javascript">
+
+var features = [
+  'geolocation',
+  'camera',
+  'microphone',
+  'midi',
+  'encrypted-media'
+];
+
+function update_feature_policy() {
+  var feature_policy = '';
+  for (var feature in features) {
+    if (document.getElementById(features[feature]).checked)
+      feature_policy += features[feature] + ';';
+  }
+
+  var iframe = document.getElementById('iframe');
+  iframe.allow = feature_policy;
+  iframe.src = 'https://permission.site';
+}
+
+function onload() {
+  for (var feature in features) {
+    var fields = document.getElementById('fields');
+
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = features[feature];
+    fields.appendChild(input);
+
+    var label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.innerHTML = features[feature];
+
+    fields.appendChild(label);
+
+    fields.appendChild(document.createElement('br'));
+  }
+
+  document.getElementById('fields').addEventListener('change',
+                                                     update_feature_policy);
+  update_feature_policy();
+}
+
+window.addEventListener('load', onload);
+</script>
+</head>
 <body>
-Welcome to my site!
-<iframe style="visibility:hidden" src="https://apprtc.appspot.com/r/905160541"></iframe>
+<fieldset id="fields">
+  <legend>Feature Policy</legend>
+</fieldset>
+<iframe id="iframe" width="750px" height="750px"></iframe>
 </body>
 </html>
