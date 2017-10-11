@@ -1,5 +1,13 @@
 <html>
 <head>
+<style>
+#fields-container {
+  position: fixed;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+</style>
 <script type="text/javascript">
 
 var features = [
@@ -17,9 +25,13 @@ function update_feature_policy() {
       feature_policy += features[feature] + ';';
   }
 
-  var iframe = document.getElementById('iframe');
-  iframe.allow = feature_policy;
-  iframe.src = 'https://permission.site';
+  var permissions_frame = document.getElementById('permissions-frame');
+  permissions_frame.allow = feature_policy;
+  permissions_frame.src = 'https://permission.site';
+
+  var flash_frame = document.getElementById('flash-frame');
+  flash_frame.allow = feature_policy;
+  flash_frame.src = 'https://www.onlinemictest.com/webcam-test-in-adobe-flash/';
 }
 
 function onload() {
@@ -49,9 +61,12 @@ window.addEventListener('load', onload);
 </script>
 </head>
 <body>
+<div id="fields-container">
 <fieldset id="fields">
   <legend>Feature Policy</legend>
 </fieldset>
-<iframe id="iframe" width="750px" height="750px"></iframe>
+</div>
+<iframe id="permissions-frame" width="750px" height="750px"></iframe>
+<iframe id="flash-frame" width="750px" height="750px"></iframe>
 </body>
 </html>
