@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Feature Policy Sandbox bug</title>
+<script>
+navigator.geolocation.getCurrentPosition(function() {}, function() {});
+</script>
+</head>
+<body>
+<iframe allow="geolocation *;" sandbox="" src="feature-policy-sandbox.html"></iframe>
+</body>
+</html>
