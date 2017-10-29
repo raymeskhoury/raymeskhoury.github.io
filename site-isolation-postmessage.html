@@ -7,7 +7,7 @@ if (location.hash.includes('iframe')) {
 } else {
   window.addEventListener('message', function(e) { console.error(e.data); });
   const frame = document.createElement('iframe');
-  frame.src = 'site-isolation-postmessage.html#iframe';
+  frame.src = 'https://raymeskhoury.github.io/site-isolation-postmessage.html#iframe';
   document.body.appendChild(frame);
 }
 </script>
