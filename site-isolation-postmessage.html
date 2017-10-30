@@ -3,9 +3,7 @@
 </body>
 <script>
 if (location.hash.includes('iframe')) {
-  setTimeout(function() {
-    window.parent.postMessage('A message from the child frame', '*');
-  }, 100);
+  window.parent.postMessage('A message from the child frame', '*');
 } else {
   const frame = document.createElement('iframe');
   frame.src = 'https://raymeskhoury.github.io/site-isolation-postmessage.html#iframe';
