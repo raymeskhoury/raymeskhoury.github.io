@@ -5,10 +5,15 @@
 if (location.hash.includes('iframe')) {
   window.parent.postMessage('A message from the child frame', '*');
 } else {
-  window.addEventListener('message', function(e) { console.error(e.data); });
   const frame = document.createElement('iframe');
   frame.src = 'https://raymeskhoury.github.io/site-isolation-postmessage.html#iframe';
   document.body.appendChild(frame);
+
+  window.addEventListener('message', function(e) {
+    console.error(e.data);
+    document.body.removeChild(frame);
+  });
+
 }
 </script>
 </html>
