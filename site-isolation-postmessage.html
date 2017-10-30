@@ -12,6 +12,7 @@ if (location.hash.includes('iframe')) {
   window.addEventListener('message', function(e) {
     console.error(e.data);
     document.body.removeChild(frame);
+    console.error('Finished test');
   });
 
 }
