@@ -1,0 +1,75 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->
+<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contoso Task Pane Add-in</title>
+
+    <!-- Office JavaScript API -->
+    <script
+      type="text/javascript"
+      src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"
+    ></script>
+
+    <!-- For more information on Office UI Fabric, visit https://developer.microsoft.com/fabric. -->
+    <link
+      rel="stylesheet"
+      href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css"
+    />
+
+    <script type="text/javascript" src="../functions/functions.js"></script>
+    <script type="text/javascript" src="taskpane.js"></script>
+
+    <!-- Template styles -->
+    <link href="taskpane.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="ms-font-m ms-welcome ms-Fabric">
+    <header class="ms-welcome__header ms-bgColor-neutralLighter">
+      <img width="90" height="90" src="../../assets/logo-filled.png" />
+      <h1 class="ms-font-su">Welcome</h1>
+    </header>
+    <section id="sideload-msg" class="ms-welcome__main">
+      <h2 class="ms-font-xl">Please sideload your add-in to see app body.</h2>
+    </section>
+    <main id="app-body" class="ms-welcome__main" style="display: none">
+      <div>
+        <p>Try out the functions using the following syntax:</p>
+        <p>
+            <code>
+              =BINANCE.CONVERT("btc", NOW(), 10)
+            </code>
+        </p>
+       
+        <p>Where:
+        <ul>
+          <li>The currency code is the currency to convert from into AUD.</li>
+          <li>The date/time is the date/time of the transaction in UTC.</li>
+          <li>The last parameter is the amount of the currency to convert.</li>
+        </ul>
+        </p>
+        <p>USDT is always used as an intermediate currency and assumed to be equal to 1USD. 
+           USD to AUD data is pulled on a per-day average basis from ozforex.com.
+           Crypto data is pulled from binance klines on a per-hour basis. If the conversion time
+           falls exactly on the hour, the kline open price is used. If it falls mid-hour, the average
+           of the high and low for the hour is taken.
+        </p>
+        <p>The following functions are also provided:</p>
+        <p>
+          <code>
+            =BINANCE.EXTRACT_AMOUNT("-4000.35 BTC")
+            =BINANCE_EXTRACT_CURRENCY("-4000.35 BTC")
+          </code>
+      </p>
+      <p>
+        EXTRACT_AMOUNT will return -4000.35 in this case, i.e. the amount of the currency.
+        EXTRACT_CURRENCY will return BTC in this case, i.e. the currency type.
+      </p>
+      </div>
+    </main>
+  </body>
+</html>

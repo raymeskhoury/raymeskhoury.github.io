@@ -1,0 +1,53 @@
+{
+  "functions": [
+    {
+      "description": "Convert the given currency to AUD at the given time/date.",
+      "id": "CONVERT",
+      "name": "CONVERT",
+      "parameters": [
+        {
+          "description": "The 'from' currency",
+          "name": "from",
+          "type": "string"
+        },
+        {
+          "description": "The time/date in UTC",
+          "name": "conversionTime",
+          "type": "number"
+        },
+        {
+          "description": "The amount of the currency to convert",
+          "name": "amount",
+          "type": "number"
+        }
+      ],
+      "result": {}
+    },
+    {
+      "description": "Extract the amount of a currency from a string. e.g. 4000AUD becomes 4000.",
+      "id": "EXTRACT_AMOUNT",
+      "name": "EXTRACT_AMOUNT",
+      "parameters": [
+        {
+          "description": "The string to extract from",
+          "name": "input",
+          "type": "string"
+        }
+      ],
+      "result": {}
+    },
+    {
+      "description": "Extract the currency from a string. e.g. 4000AUD becomes AUD.",
+      "id": "EXTRACT_CURRENCY",
+      "name": "EXTRACT_CURRENCY",
+      "parameters": [
+        {
+          "description": "The string to extract from",
+          "name": "input",
+          "type": "string"
+        }
+      ],
+      "result": {}
+    }
+  ]
+}
