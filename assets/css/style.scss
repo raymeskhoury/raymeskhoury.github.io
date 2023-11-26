@@ -1,0 +1,124 @@
+---
+---
+
+#about-me {
+    margin-bottom: 20px;
+}
+
+.bricklayer-column-sizer {
+  width: 100%;
+}
+
+.bricklayer-column {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+:not(:last-child).bricklayer-column {
+  padding-left: 0px;
+  padding-right: 20px;
+}
+
+.post {
+    margin-bottom: 20px;
+  }
+  
+@media screen and (max-width: 992px) {
+.navbar-nav {
+    margin-top: 20px;
+    margin-left: 0px!important;
+    width: fit-content;
+}
+}
+
+@media screen and (min-width: 768px) {
+  .bricklayer-column-sizer {
+    /* divide by 2. */
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .bricklayer-column-sizer {
+    /* divide by 3. */
+    width: 33.3%;
+  }
+}
+
+.progress {
+    height: 4px!important;
+    width: 90%;
+}
+
+.post-date {
+  font-size: 0.7rem;
+}
+
+.card-footer {
+  font-size: 0.8rem;
+}
+
+$primary: #ff4c16;
+
+.card-title-after {
+    content: "";
+    display: block;
+    height: 0.1em;
+    background: $primary;
+  }
+
+.card-title {
+  width: fit-content;
+}
+.card-title::after {
+    @extend .card-title-after;
+    width: 0;
+    transition: width 0.35s;
+  }
+
+.card:hover .card-title::after {
+    width: 100%;
+  }
+  
+
+.card-img-top {
+    filter: grayscale(0.2);
+}
+
+.card:hover .card-img-top {
+    filter: grayscale(0);
+    transition: filter 0.35s;
+}
+
+.text-primary {
+  color: $primary !important;
+}
+.border-primary {
+  border-color: $primary !important;
+}
+
+a {
+  color: $primary;
+}
+
+.bg-primary {
+    background-color: $primary!important;
+}
+
+@import "portfolYOU";
+
+[data-theme="light"] #theme-toggler:before {
+  content: "🌃";
+}
+
+[data-theme="dark"] #theme-toggler:before {
+  content: "🌇";
+}
+
+[data-theme="light"] .navbar-themed .navbar-nav .nav-link {
+  color: rgba(52, 58, 64, 0.8);
+}
+
+[data-theme="dark"] .navbar-themed .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+}

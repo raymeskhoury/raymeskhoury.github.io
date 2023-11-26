@@ -1,0 +1,11 @@
+
+<div class="bricklayer m-3 mt-5">
+
+
+  {% for post in site.posts %}
+    {% include blog/post-card.html %}
+  {% endfor %}
+  
+</div>
+
+<script>var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));</script>
