@@ -1,6 +1,8 @@
 const BASE_URL = "https://raymeskhoury.github.io/blog/posts";
 const POSTS_PER_PAGE = 5;
 
+var converter = new showdown.Converter();
+
 async function getPosts() {
   const url = BASE_URL + "/published.json";
   try {
@@ -54,7 +56,7 @@ async function addPost(name) {
   if (!post) {
     return;
   }
-  const date = Date.parse(name.substring(0, 10));
+  const date = new Date(Date.parse(name.substring(0, 10)));
 
   const lines = post.split("\n");
   let title;
@@ -65,7 +67,8 @@ async function addPost(name) {
   for (const line of lines) {
     if (line === "---") {
       if (inPreamble) {
-        break;
+        inPreamble = false;
+        continue;
       }
       inPreamble = true;
       continue;
@@ -83,10 +86,12 @@ async function addPost(name) {
 
     body.push(line);
   }
+  console.error(converter.makeHtml(body.join("\n")));
   posts.push({
     date: date,
     title: title,
-    body: body.join("\n"),
+    image: image,
+    body: converter.makeHtml(body.join("\n")),
   });
 }
 
@@ -186,13 +191,17 @@ async function renderPosts() {
     const template = document.getElementById("postTemplate").cloneNode(true);
     template.id = undefined;
     template.style.display = "block";
-    template.getElementsByClassName("BlogTitle")[0].innerText = post.title;
+    template.getElementsByClassName("blogtitle")[0].innerText = post.title;
+    template.getElementsByClassName("blogimg")[0].src = post.image;
+
     if (mode === "multiple") {
       // set href
     }
-    template.getElementsByClassName("BlogContent")[0].innerText = post.body;
-    template.getElementsByClassName("BlogDate")[0].innerText = post.date;
-    postsWrapper.appendChild(post);
+    template.getElementsByClassName("blogcontent")[0].innerHTML = post.body;
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    template.getElementsByClassName("blogdate")[0].innerText =
+      post.date.toLocaleDateString("en-AU", options);
+    postsWrapper.appendChild(template);
   }
 
   document.getElementById("postsWrapper").style.display = "block";
