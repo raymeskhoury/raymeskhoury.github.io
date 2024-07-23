@@ -217,9 +217,13 @@ async function renderPosts() {
   }
 }
 
-await downloadPosts();
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", renderPosts);
-} else {
-  renderPosts();
+async function main() {
+  await downloadPosts();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderPosts);
+  } else {
+    renderPosts();
+  }
 }
+
+main();
