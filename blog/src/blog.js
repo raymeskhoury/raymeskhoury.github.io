@@ -48,6 +48,8 @@ let olderLink;
 let posts = [];
 
 async function addPost(name) {
+  console.error(name);
+
   const post = await getPost(name);
   if (!post) {
     return;
@@ -125,6 +127,7 @@ async function downloadPosts() {
     return;
   }
 
+  mode = "multiple";
   const pageRequested = Number(urlParams.get("page"));
   const postsPerPageRequested = Number(urlParams.get("count"));
   let page = 0;
@@ -132,7 +135,7 @@ async function downloadPosts() {
   if (pageRequested !== NaN && pageRequested >= 0) {
     page = pageRequested;
   }
-  if (postsPerPageRequested !== NaN && postsPerPageRequested >= 0) {
+  if (postsPerPageRequested !== NaN && postsPerPageRequested > 0) {
     postsPerPage = postsPerPageRequested;
   }
 
@@ -145,7 +148,7 @@ async function downloadPosts() {
   for (
     let i = page * postsPerPage;
     i < posts.length && i < (page + 1) * postsPerPage;
-    ++i
+    i++
   ) {
     promises.push(addPost(posts[i]));
   }
@@ -175,10 +178,14 @@ async function renderPosts() {
     return;
   }
 
+  document.getElementById("errorMessage").style.display = "none";
+  document.getElementById("postsWrapper").style.display = "block";
+
   const postsWrapper = document.getElementById("postsWrapper");
   for (const post of posts) {
     const template = document.getElementById("postTemplate").cloneNode(true);
     template.id = undefined;
+    template.style.display = "block";
     template.getElementsByClassName("BlogTitle")[0].innerText = post.title;
     if (mode === "multiple") {
       // set href
@@ -191,12 +198,12 @@ async function renderPosts() {
   document.getElementById("postsWrapper").style.display = "block";
   if (newerLink) {
     document.getElementById("newerButton").href =
-      "?" + URLSearchParams(newerLink).toString();
+      "?" + new URLSearchParams(newerLink).toString();
     document.getElementById("newerButton").style.display = "block";
   }
   if (olderLink) {
     document.getElementById("olderButton").href =
-      "?" + URLSearchParams(olderLink).toString();
+      "?" + new URLSearchParams(olderLink).toString();
     document.getElementById("olderButton").style.display = "none";
   }
 }
