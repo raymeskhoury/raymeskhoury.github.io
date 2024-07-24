@@ -214,6 +214,21 @@ async function renderPosts() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     template.getElementsByClassName("blogdate")[0].innerText =
       post.date.toLocaleDateString("en-AU", options);
+    if (mode === "multiple") {
+      template.getElementsByClassName("blogcommentslink")[0].href = "?post=" + post.name.substring(0, post.name.length-3);
+    } else if (mode === "single") {
+      template.getElementsByClassName("blogcommentslink")[0].display = "none";
+      template.getElementsByClassName("blogcommentssection")[0].innerHTML = '''
+        <script src="https://utteranc.es/client.js"
+          repo="raymeskhoury/raymeskhoury.github.io"
+          issue-term="url"
+          label="blog-comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>''';
+    }
+    
     postsWrapper.appendChild(template);
   }
 
