@@ -117,12 +117,12 @@ async function downloadPosts() {
 
     if (index >= 1) {
       newerLink = {
-        post: index - 1,
+        post: posts[index - 1],
       };
     }
     if (index < posts.length - 1) {
       olderLink = {
-        post: index + 1,
+        post: posts[index + 1],
       };
     }
     await addPost(postName);
@@ -226,7 +226,7 @@ async function renderPosts() {
   if (olderLink) {
     document.getElementById("olderButton").href =
       "?" + new URLSearchParams(olderLink).toString();
-    document.getElementById("olderButton").style.display = "none";
+    document.getElementById("olderButton").style.display = "block";
   }
 
   executeScriptElements(document.getElementById("postsWrapper"));
