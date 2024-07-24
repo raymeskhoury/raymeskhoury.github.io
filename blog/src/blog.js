@@ -95,7 +95,7 @@ async function addPost(name) {
 
 async function downloadPosts() {
   const urlParams = new URLSearchParams(window.location.search);
-  const postName = urlParams.get("post");
+  let postName = urlParams.get("post");
 
   const posts = await getPosts();
   if (posts === null) {
