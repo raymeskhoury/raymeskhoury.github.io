@@ -119,12 +119,12 @@ async function downloadPosts() {
 
     if (index >= 1) {
       newerLink = {
-        post: posts[index - 1],
+        post: posts[index - 1].substring(0, posts[index - 1].length - 3),
       };
     }
     if (index < posts.length - 1) {
       olderLink = {
-        post: posts[index + 1],
+        post: posts[index + 1].substring(0, posts[index + 1].length - 3),
       };
     }
     await addPost(postName);
