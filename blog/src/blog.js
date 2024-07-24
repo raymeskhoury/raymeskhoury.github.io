@@ -218,7 +218,7 @@ async function renderPosts() {
       template.getElementsByClassName("blogcommentslink")[0].href = "?post=" + post.name.substring(0, post.name.length-3);
     } else if (mode === "single") {
       template.getElementsByClassName("blogcommentslink")[0].display = "none";
-      template.getElementsByClassName("blogcommentssection")[0].innerHTML = '''
+      template.getElementsByClassName("blogcommentssection")[0].innerHTML = `
         <script src="https://utteranc.es/client.js"
           repo="raymeskhoury/raymeskhoury.github.io"
           issue-term="url"
@@ -226,7 +226,7 @@ async function renderPosts() {
           theme="github-light"
           crossorigin="anonymous"
           async>
-        </script>''';
+        </script>`;
     }
     
     postsWrapper.appendChild(template);
