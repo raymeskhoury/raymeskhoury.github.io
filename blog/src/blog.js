@@ -1,5 +1,5 @@
 const BASE_URL = "https://raymeskhoury.github.io/blog/posts";
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = 3;
 
 var converter = new showdown.Converter();
 
@@ -85,6 +85,7 @@ async function addPost(name) {
     body.push(line);
   }
   posts.push({
+    name: name,
     date: date,
     title: title,
     image: image,
@@ -206,10 +207,9 @@ async function renderPosts() {
     template.style.display = "block";
     template.getElementsByClassName("blogtitle")[0].innerText = post.title;
     template.getElementsByClassName("blogimg")[0].src = post.image;
+    template.getElementsByClassName("blogheadinglink")[0].href = "?page=" + post.name;
 
-    if (mode === "multiple") {
-      // set href
-    }
+    
     template.getElementsByClassName("blogcontent")[0].innerHTML = post.body;
     const options = { year: "numeric", month: "long", day: "numeric" };
     template.getElementsByClassName("blogdate")[0].innerText =
