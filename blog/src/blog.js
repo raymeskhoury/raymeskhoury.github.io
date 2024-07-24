@@ -50,8 +50,6 @@ let olderLink;
 let posts = [];
 
 async function addPost(name) {
-  console.error(name);
-
   const post = await getPost(name);
   if (!post) {
     return;
@@ -86,7 +84,6 @@ async function addPost(name) {
 
     body.push(line);
   }
-  console.error(converter.makeHtml(body.join("\n")));
   posts.push({
     date: date,
     title: title,
@@ -174,6 +171,22 @@ async function downloadPosts() {
   }
 }
 
+function executeScriptElements(containerElement) {
+  const scriptElements = containerElement.querySelectorAll("script");
+
+  Array.from(scriptElements).forEach((scriptElement) => {
+    const clonedElement = document.createElement("script");
+
+    Array.from(scriptElement.attributes).forEach((attribute) => {
+      clonedElement.setAttribute(attribute.name, attribute.value);
+    });
+
+    clonedElement.text = scriptElement.text;
+
+    scriptElement.parentNode.replaceChild(clonedElement, scriptElement);
+  });
+}
+
 async function renderPosts() {
   if (mode === "error") {
     document.getElementById("postsWrapper").style.display = "none";
@@ -215,6 +228,8 @@ async function renderPosts() {
       "?" + new URLSearchParams(olderLink).toString();
     document.getElementById("olderButton").style.display = "none";
   }
+
+  executeScriptElements(document.getElementById("postsWrapper"));
 }
 
 async function main() {
