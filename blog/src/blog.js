@@ -104,6 +104,7 @@ async function downloadPosts() {
   }
 
   if (postName) {
+    postName += ".md";
     mode = "single";
     let index = 0;
     for (; index < posts.length; ++index) {
@@ -207,8 +208,7 @@ async function renderPosts() {
     template.style.display = "block";
     template.getElementsByClassName("blogtitle")[0].innerText = post.title;
     template.getElementsByClassName("blogimg")[0].src = post.image;
-    template.getElementsByClassName("blogheadinglink")[0].href = "?page=" + post.name;
-
+    template.getElementsByClassName("blogheadinglink")[0].href = "?post=" + post.name.substring(0, post.name.length-3);
     
     template.getElementsByClassName("blogcontent")[0].innerHTML = post.body;
     const options = { year: "numeric", month: "long", day: "numeric" };
