@@ -263,7 +263,8 @@ async function main() {
     document.location.hostname !== "www.raykhoury.com.au" &&
     new URLSearchParams(document.location.search).get("debug")
   ) {
-    const mod = await import("http://127.0.0.1:5500/blog/src/blog.js");
+    const domain = new URLSearchParams(document.location.search).get("debug");
+    const mod = await import("http://" + domain + "/blog/src/blog.js");
     mod.mainAfterDebugCheck();
     return;
   }
