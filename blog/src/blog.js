@@ -260,7 +260,7 @@ export async function mainAfterDebugCheck() {
 
 async function main() {
   if (
-    document.location.hostname !== "www.raykhoury.com.au" &&
+    document.location.hostname !== "raykhoury.com.au" &&
     new URLSearchParams(document.location.search).get("debug")
   ) {
     const domain = new URLSearchParams(document.location.search).get("debug");
