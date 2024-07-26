@@ -208,14 +208,16 @@ async function renderPosts() {
     template.style.display = "block";
     template.getElementsByClassName("blogtitle")[0].innerText = post.title;
     template.getElementsByClassName("blogimg")[0].src = post.image;
-    template.getElementsByClassName("blogheadinglink")[0].href = "?post=" + post.name.substring(0, post.name.length-3);
-    
+    template.getElementsByClassName("blogheadinglink")[0].href =
+      "?post=" + post.name.substring(0, post.name.length - 3);
+
     template.getElementsByClassName("blogcontent")[0].innerHTML = post.body;
     const options = { year: "numeric", month: "long", day: "numeric" };
     template.getElementsByClassName("blogdate")[0].innerText =
       post.date.toLocaleDateString("en-AU", options);
     if (mode === "multiple") {
-      template.getElementsByClassName("blogcommentslink")[0].href = "?post=" + post.name.substring(0, post.name.length-3);
+      template.getElementsByClassName("blogcommentslink")[0].href =
+        "?post=" + post.name.substring(0, post.name.length - 3);
     } else if (mode === "single") {
       template.getElementsByClassName("blogcommentslink")[0].display = "none";
       template.getElementsByClassName("blogcommentssection")[0].innerHTML = `
@@ -228,7 +230,7 @@ async function renderPosts() {
           async>
         </script>`;
     }
-    
+
     postsWrapper.appendChild(template);
   }
 
@@ -247,13 +249,25 @@ async function renderPosts() {
   executeScriptElements(document.getElementById("postsWrapper"));
 }
 
-async function main() {
+export async function mainAfterDebugCheck() {
   await downloadPosts();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", renderPosts);
   } else {
     renderPosts();
   }
+}
+
+async function main() {
+  if (
+    document.location.hostname !== "www.raykhoury.com.au" &&
+    new URLSearchParams(document.location.search).get("debug")
+  ) {
+    const mod = await import("http://127.0.0.1:5500/blog/src/blog.js");
+    mod.mainAfterDebugCheck();
+    return;
+  }
+  mainAfterDebugCheck();
 }
 
 main();
