@@ -257,7 +257,7 @@ export async function mainAfterDebugCheck(debug) {
 export async function main() {
   const debug = new URLSearchParams(document.location.search).get("debug");
   if (document.location.hostname !== "raykhoury.com.au" && debug) {
-    const mod = await import("http://" + debugDomain + "/blog/src/blog.js");
+    const mod = await import("http://" + debug + "/blog/src/blog.js");
     mod.mainAfterDebugCheck(debug);
     return;
   }
