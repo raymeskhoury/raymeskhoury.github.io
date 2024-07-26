@@ -1,3 +1,4 @@
+"use strict";
 const BASE_URL = "https://raymeskhoury.github.io/blog/posts";
 const POSTS_PER_PAGE = 3;
 
@@ -48,6 +49,7 @@ let mode = "single";
 let newerLink;
 let olderLink;
 let posts = [];
+let debugDomain;
 
 async function addPost(name) {
   const post = await getPost(name);
@@ -189,6 +191,10 @@ function executeScriptElements(containerElement) {
   });
 }
 
+function addPageQueryParams(str) {
+  return str + (debugDomain ? "&debug=" + debugDomain : "");
+}
+
 async function renderPosts() {
   if (mode === "error") {
     document.getElementById("postsWrapper").style.display = "none";
@@ -209,47 +215,37 @@ async function renderPosts() {
     template.getElementsByClassName("blogtitle")[0].innerText = post.title;
     template.getElementsByClassName("blogimg")[0].src = post.image;
     template.getElementsByClassName("blogheadinglink")[0].href =
-      "?post=" + post.name.substring(0, post.name.length - 3);
+      addPageQueryParams(
+        "?post=" + post.name.substring(0, post.name.length - 3)
+      );
 
     template.getElementsByClassName("blogcontent")[0].innerHTML = post.body;
     const options = { year: "numeric", month: "long", day: "numeric" };
     template.getElementsByClassName("blogdate")[0].innerText =
       post.date.toLocaleDateString("en-AU", options);
-    if (mode === "multiple") {
-      template.getElementsByClassName("blogcommentslink")[0].href =
-        "?post=" + post.name.substring(0, post.name.length - 3);
-    } else if (mode === "single") {
-      template.getElementsByClassName("blogcommentslink")[0].display = "none";
-      template.getElementsByClassName("blogcommentssection")[0].innerHTML = `
-        <script src="https://utteranc.es/client.js"
-          repo="raymeskhoury/raymeskhoury.github.io"
-          issue-term="url"
-          label="blog-comment"
-          theme="github-light"
-          crossorigin="anonymous"
-          async>
-        </script>`;
-    }
 
     postsWrapper.appendChild(template);
   }
 
   document.getElementById("postsWrapper").style.display = "block";
   if (newerLink) {
-    document.getElementById("newerButton").href =
-      "?" + new URLSearchParams(newerLink).toString();
+    document.getElementById("newerButton").href = addPageQueryParams(
+      "?" + new URLSearchParams(newerLink).toString()
+    );
     document.getElementById("newerButton").style.display = "block";
   }
   if (olderLink) {
-    document.getElementById("olderButton").href =
-      "?" + new URLSearchParams(olderLink).toString();
+    document.getElementById("olderButton").href = addPageQueryParams(
+      "?" + new URLSearchParams(olderLink).toString()
+    );
     document.getElementById("olderButton").style.display = "block";
   }
 
   executeScriptElements(document.getElementById("postsWrapper"));
 }
 
-export async function mainAfterDebugCheck() {
+export async function mainAfterDebugCheck(debug) {
+  debugDomain = debug;
   await downloadPosts();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", renderPosts);
@@ -259,14 +255,11 @@ export async function mainAfterDebugCheck() {
 }
 
 export async function main() {
-  if (
-    document.location.hostname !== "raykhoury.com.au" &&
-    new URLSearchParams(document.location.search).get("debug")
-  ) {
-    const domain = new URLSearchParams(document.location.search).get("debug");
-    const mod = await import("http://" + domain + "/blog/src/blog.js");
-    mod.mainAfterDebugCheck();
+  const debug = new URLSearchParams(document.location.search).get("debug");
+  if (document.location.hostname !== "raykhoury.com.au" && debug) {
+    const mod = await import("http://" + debugDomain + "/blog/src/blog.js");
+    mod.mainAfterDebugCheck(debug);
     return;
   }
-  mainAfterDebugCheck();
+  mainAfterDebugCheck(debug);
 }
