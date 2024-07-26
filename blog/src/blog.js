@@ -265,7 +265,6 @@ async function main() {
   ) {
     const domain = new URLSearchParams(document.location.search).get("debug");
     const mod = await import("http://" + domain + "/blog/src/blog.js");
-    mod.mainAfterDebugCheck();
     return;
   }
   mainAfterDebugCheck();
