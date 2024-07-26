@@ -258,16 +258,15 @@ export async function mainAfterDebugCheck() {
   }
 }
 
-async function main() {
+export async function main() {
   if (
     document.location.hostname !== "raykhoury.com.au" &&
     new URLSearchParams(document.location.search).get("debug")
   ) {
     const domain = new URLSearchParams(document.location.search).get("debug");
     const mod = await import("http://" + domain + "/blog/src/blog.js");
+    mod.mainAfterDebugCheck();
     return;
   }
   mainAfterDebugCheck();
 }
-
-main();
